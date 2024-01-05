@@ -21,13 +21,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include <task_completion_source.h>
 #include <task.h>
 #include <lfllist.h>
+#include <lfllist_allocator.h>
 
 namespace ghostl
 {
-    template<typename T = void>
-    struct async_queue : private lfllist<T>
+    template<typename T = void, size_t CAPACITY = 128>
+    struct async_queue : private lfllist<T, lfllist_allocator<detail::lfllist_node_type<T>, CAPACITY>>
     {
-        using lfllist_type = lfllist<T>;
+        using lfllist_type = lfllist<T, lfllist_allocator<detail::lfllist_node_type<T>, CAPACITY>>;
 
         async_queue()
         {
@@ -86,7 +87,7 @@ namespace ghostl
         }
 
     private:
-        ghostl::lfllist<task_completion_source<>> tcs_queue;
+        ghostl::lfllist<task_completion_source<>, lfllist_allocator<detail::lfllist_node_type<task_completion_source<>>, CAPACITY>> tcs_queue;
         std::atomic<typename decltype(tcs_queue)::node_type*> cur_tcs;
     };
 }
