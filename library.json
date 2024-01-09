@@ -2,9 +2,7 @@
     "name": "ghostl",
     "version": "1.0.0",
     "description": "Lock-free queue; C++ coroutines; and a nano-sized C++ STL adapter for MCUs like ESP8266/ESP32.",
-    "keywords": [
-        "lock-free; coroutine; stl"
-    ],
+    "keywords": "lock-free, coroutine, stl",
     "repository":
     {
         "type": "git",
